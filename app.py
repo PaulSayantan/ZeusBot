@@ -8,7 +8,7 @@ from discord.ext import commands
 
 
 class ZeusBot:
-    bot = commands.Bot(command_prefix="!")
+    bot = discord.Client()
     
     def __init__(self) -> None:
         print('ZeusBot Initialized...')
@@ -38,7 +38,7 @@ class ZeusBot:
             sleep(5)
             await msg.channel.purge(limit=5)
 
-        if msg.content.startswith('$ask'):
+        elif msg.content.startswith('$ask'):
             search_query = msg.content.split('$ask')[1]
             result = 'nil'
             output = 'Google Search Results for Query: ' + search_query +'\n' + result
@@ -57,27 +57,32 @@ class ZeusBot:
             output = 'Google Search Results for Query: ' + search_query +'\n' + result
             await msg.channel.send(output)
 
-    # # greet
-    # @bot.command()
-    # async def hello(ctx: commands.Context, *args: str):
-    #     greet = 'Hi ' + str(ctx.author) + '! So, do you want me to do something ?'
-    #     await ctx.send(content=greet)
-    
-    # # ask the bot about something, and it will search about it on google
-    # @bot.command()
-    # async def ask(ctx: commands.Context, *args: str):
-    #     query = ' '.join(str(args))
-    #     # search the query in google
-    #     result = ''
-    #     output = 'Google Search Results for Query: ' + query +'\n' + result
-    #     await ctx.send(output)
 
-    # # music playback using ytdl [NOT IMPLEMENTED]
-    # @bot.command()
-    # async def play(ctx: commands.Context, *args):
-    #     music_query = ' '.join(args)
-    #     # play music from youtube
-    #     await ctx.send('This command is not yet implemented by the developer. Will be available in the near future.')
+
+
+
+class ZeusCommands(commands.Cog):
+    # greet
+    @commands.command()
+    async def hello(ctx: commands.Context, *args: str):
+        greet = 'Hi ' + str(ctx.author) + '! So, do you want me to do something ?'
+        await ctx.send(content=greet)
+    
+    # ask the bot about something, and it will search about it on google
+    @commands.command()
+    async def ask(ctx: commands.Context, *args: str):
+        query = ' '.join(str(args))
+        # search the query in google
+        result = ''
+        output = 'Google Search Results for Query: ' + query +'\n' + result
+        await ctx.send(output)
+
+    # music playback using ytdl [NOT IMPLEMENTED]
+    @commands.command()
+    async def play(ctx: commands.Context, *args):
+        music_query = ' '.join(args)
+        # play music from youtube
+        await ctx.send('This command is not yet implemented by the developer. Will be available in the near future.')
     
  
 if __name__ == '__main__':
